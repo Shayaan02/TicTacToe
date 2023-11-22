@@ -1,47 +1,47 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
 
 public class TicTacToe implements ActionListener {
-Random random = new Random();
-JFrame frame = new JFrame();
-JPanel title_panel = new JPanel();
-JPanel button_panel = new JPanel();
-JLabel textfield = new JLabel();
-JButton[] buttons = new JButton[9]; // skapar en array av 9 knappar
-boolean player1_turn;
-    TicTacToe(){
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
-        frame.getContentPane().setBackground(new Color(50,50,50));
-        frame.setLayout(new BorderLayout());
+    private JFrame frame;
+    private JPanel panel;
+    private JButton[] buttons = new JButton[9];
+    private boolean isXTurn = true;
+
+    public TicTacToe() {
+        frame = new JFrame("Tic Tac Toe");
+
+        panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 3));
+
+        for (int i = 0; i < 9; i++) {
+            buttons[i] = new JButton();
+            buttons[i].addActionListener(this);
+            buttons[i].setFont(new Font("Times New Roman", Font.PLAIN, 100));
+            panel.add(buttons[i]);
+        }
+
+        frame.add(panel, BorderLayout.CENTER);
+        frame.setSize(700, 700);
         frame.setVisible(true);
-        textfield.setBackground(new Color(25,25,25));
-        textfield.setForeground(new Color(25,255,0));
-        textfield.setFont(new Font("Ink Free", Font.BOLD,75));
-        textfield.setHorizontalAlignment(JLabel.CENTER);
-        textfield.setText("Tic-Tac-Toe");
-        textfield.setOpaque(true);
-
-        title_panel.setLayout(new BorderLayout());
-        title_panel.setBounds(0,0,800,100);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-public void actionPreformed (ActionEvent e){
 
-}
+    public void checkForWinner() {
 
-public void firstTurn(){
+    }
 
-}
-public void check(){
+    public void actionPerformed(ActionEvent e) {
+        JButton button = (JButton) e.getSource();
+        if (isXTurn) {
+            button.setText(" X ");
+        }
+        if (!isXTurn) {
+            button.setText(" O ");
+        }
+        button.setEnabled(false);
+        isXTurn = !isXTurn;
 
-}
-public void xWins(int a, int b, int c){
-
-}
-    public void oWins(int a, int b, int c){
-
+        checkForWinner();
     }
 }
