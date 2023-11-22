@@ -29,6 +29,8 @@ public class TicTacToe implements ActionListener {
 
     public void checkForWinner() {
 
+        //Vi behöver cheka om x/o har vunnit och om det är en draw
+
     }
 
     public void actionPerformed(ActionEvent e) {
