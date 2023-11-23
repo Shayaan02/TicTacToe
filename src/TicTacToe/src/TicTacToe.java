@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 public class TicTacToe implements ActionListener {
     private JFrame frame;
@@ -8,9 +9,12 @@ public class TicTacToe implements ActionListener {
     private JButton[][] buttons = new JButton[3][3]; // Use a 2D array
     private JLabel textfield = new JLabel();
     private boolean isXTurn = true;
+    private Random random = new Random();
+    private boolean AIEnabled = false;
 
     public TicTacToe() {
         frame = new JFrame("Tic Tac Toe");
+        frame.setLayout(new BorderLayout());
 
         panel = new JPanel();
         panel.setLayout(new GridLayout(3, 3));
@@ -24,13 +28,17 @@ public class TicTacToe implements ActionListener {
             }
         }
 
+        JPanel buttonPanel = new JPanel();
+        JButton turnOnAI = new JButton("Turn on AI");
+        turnOnAI.addActionListener(e -> toggleAI());
+        buttonPanel.add(turnOnAI);
+
         // Add the textfield to the frame
         frame.add(textfield, BorderLayout.SOUTH);
+        frame.add(turnOnAI, BorderLayout.NORTH);
+        frame.add(panel, BorderLayout.CENTER);
 
         // Set the layout manager for the frame
-        frame.setLayout(new BorderLayout());
-
-        frame.add(panel, BorderLayout.CENTER);
         frame.setSize(700, 700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +70,6 @@ public class TicTacToe implements ActionListener {
         if (buttons[0][2].getText().equals(" X ") && buttons[1][1].getText().equals(" X ") && buttons[2][0].getText().equals(" X ")) {
             xWins(2, 4, 6);
         }
-
         // Check O win conditions
         if (buttons[0][0].getText().equals(" O ") && buttons[0][1].getText().equals(" O ") && buttons[0][2].getText().equals(" O ")) {
             oWins(0, 1, 2);
@@ -90,7 +97,6 @@ public class TicTacToe implements ActionListener {
         }
     }
 
-
     public void xWins(int a, int b, int c) {
         buttons[a][0].setBackground(Color.GREEN);
         buttons[a][1].setBackground(Color.GREEN);
@@ -111,6 +117,25 @@ public class TicTacToe implements ActionListener {
         restartGame();
     }
 
+    private void toggleAI() {
+        AIEnabled = !AIEnabled;
+        restartGame();
+    }
+
+    private void  aiMove() {
+        if (AIEnabled && !isXTurn) {
+            int row, col;
+            do {
+                row = random.nextInt(3);
+                col = random.nextInt(3);
+            } while (!buttons[row][col].isEnabled());
+
+            buttons[row][col].setText(" O ");
+            buttons[row][col].setEnabled(false);
+            isXTurn = true;
+            checkForWinner();
+        }
+    }
 
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
@@ -123,7 +148,9 @@ public class TicTacToe implements ActionListener {
         isXTurn = !isXTurn;
 
         checkForWinner();
+        aiMove();
     }
+
     private void disableAllButtons() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -131,6 +158,7 @@ public class TicTacToe implements ActionListener {
             }
         }
     }
+
     private void restartGame() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -142,6 +170,4 @@ public class TicTacToe implements ActionListener {
         isXTurn = true; // Reset the turn to X
         textfield.setText(""); // Clear the status text
     }
-
-
 }
