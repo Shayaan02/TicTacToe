@@ -19,8 +19,8 @@ public class TicTacToe implements ActionListener {
         panel = new JPanel();
         panel.setLayout(new GridLayout(3, 3));
 
-        for (int i = 0; i < 3; i++) { // Iterate over rows
-            for (int j = 0; j < 3; j++) { // Iterate over columns
+        for (int i = 0; i < 3; i++) { // Kollar igenom raderna
+            for (int j = 0; j < 3; j++) { // Kollar igenom kollumner
                 buttons[i][j] = new JButton();
                 buttons[i][j].addActionListener(this);
                 buttons[i][j].setFont(new Font("Times New Roman", Font.PLAIN, 100));
@@ -33,19 +33,17 @@ public class TicTacToe implements ActionListener {
         turnOnAI.addActionListener(e -> toggleAI());
         buttonPanel.add(turnOnAI);
 
-        // Add the textfield to the frame
         frame.add(textfield, BorderLayout.SOUTH);
         frame.add(turnOnAI, BorderLayout.NORTH);
         frame.add(panel, BorderLayout.CENTER);
 
-        // Set the layout manager for the frame
         frame.setSize(700, 700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void checkForWinner() {
-        // Check X win conditions
+        // Kollar X och O win conditions
         if (buttons[0][0].getText().equals(" X ") && buttons[0][1].getText().equals(" X ") && buttons[0][2].getText().equals(" X ")) {
             xWins(0, 1, 2);
         }
@@ -95,12 +93,13 @@ public class TicTacToe implements ActionListener {
         if (buttons[0][2].getText().equals(" O ") && buttons[1][1].getText().equals(" O ") && buttons[2][0].getText().equals(" O ")) {
             oWins(2, 4, 6);
         }
+        // kollar om om det är lika efter att ha kollat igenom alla win conditions
+        if (isBoardFull() && !isXTurn) {
+            draw();
+        }
     }
 
     public void xWins(int a, int b, int c) {
-        buttons[a][0].setBackground(Color.GREEN);
-        buttons[a][1].setBackground(Color.GREEN);
-        buttons[a][2].setBackground(Color.GREEN);
         JOptionPane.showMessageDialog(frame, "X Wins");
         disableAllButtons();
         textfield.setText("X Wins");
@@ -158,13 +157,30 @@ public class TicTacToe implements ActionListener {
             }
         }
     }
+    private void draw() {
+        JOptionPane.showMessageDialog(frame, "Draw!");
+        textfield.setText("Draw!");
+        disableAllButtons();
+        restartGame();
+    }
+private boolean isBoardFull(){ // kollar om brädan är full
+        for (int i = 0; i < 3; i++){ // kollar igenom alla rader
+            for (int j = 0; j < 3; j++){ // kollar igenom alla kollumner
+                if (buttons[i][j].getText().equals(""))
 
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+}
     private void restartGame() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setText("");
                 buttons[i][j].setEnabled(true);
-                buttons[i][j].setBackground(null); // Reset the background color
+                buttons[i][j].setBackground(null);
             }
         }
         isXTurn = true; // Reset the turn to X
