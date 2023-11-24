@@ -33,6 +33,7 @@ public class TicTacToe implements ActionListener {
         turnOnAI.addActionListener(e -> toggleAI());
         buttonPanel.add(turnOnAI);
 
+
         frame.add(textfield, BorderLayout.SOUTH);
         frame.add(turnOnAI, BorderLayout.NORTH);
         frame.add(panel, BorderLayout.CENTER);
@@ -40,6 +41,9 @@ public class TicTacToe implements ActionListener {
         frame.setSize(700, 700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        isXTurn = random.nextBoolean();
+        updateTurnLabel();
     }
 
     public void checkForWinner() {
@@ -120,6 +124,9 @@ public class TicTacToe implements ActionListener {
         AIEnabled = !AIEnabled;
         restartGame();
     }
+    private void updateTurnLabel() {
+        textfield.setText(isXTurn ? "X turn" : "O turn");
+    }
 
     private void aiMove() {
         if (AIEnabled && !isXTurn) {
@@ -146,6 +153,7 @@ public class TicTacToe implements ActionListener {
         button.setEnabled(false);
         isXTurn = !isXTurn;
 
+        updateTurnLabel();
         checkForWinner();
         aiMove();
     }
