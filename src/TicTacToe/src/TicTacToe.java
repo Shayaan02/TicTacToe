@@ -98,7 +98,7 @@ public class TicTacToe implements ActionListener {
             oWins(0, 2, 1, 1, 2, 0);
         }
 
-        // Check for a idraw
+        // Check for draw
         if (isBoardFull() && !isXTurn) {
             draw();
         }
