@@ -4,12 +4,12 @@ import java.awt.event.*;
 import java.util.Random;
 
 public class TicTacToe implements ActionListener {
-    private JFrame frame;
-    private JPanel panel;
-    private JButton[][] buttons = new JButton[3][3]; // Use a 2D array
-    private JLabel textfield = new JLabel();
+    private final JFrame frame;
+    private final JPanel panel;
+    private final JButton[][] buttons = new JButton[3][3]; // Use a 2D array
+    private final JLabel textfield = new JLabel();
     private boolean isXTurn = true;
-    private Random random = new Random();
+    private final Random random = new Random();
     private boolean AIEnabled = false;
 
     public TicTacToe() {
@@ -107,9 +107,9 @@ public class TicTacToe implements ActionListener {
     }
 
     public void oWins(int a, int b, int c) {
-        buttons[a][0].setBackground(Color.GREEN);
-        buttons[a][1].setBackground(Color.GREEN);
-        buttons[a][2].setBackground(Color.GREEN);
+       /* buttons[a][0].setBackground(Color.GREEN);
+        buttons[b][1].setBackground(Color.GREEN);
+        buttons[c][2].setBackground(Color.GREEN);*/
         JOptionPane.showMessageDialog(frame, "O Wins!");
         disableAllButtons();
         textfield.setText("O Wins");
@@ -121,7 +121,7 @@ public class TicTacToe implements ActionListener {
         restartGame();
     }
 
-    private void  aiMove() {
+    private void aiMove() {
         if (AIEnabled && !isXTurn) {
             int row, col;
             do {
@@ -157,24 +157,25 @@ public class TicTacToe implements ActionListener {
             }
         }
     }
+
     private void draw() {
         JOptionPane.showMessageDialog(frame, "Draw!");
         textfield.setText("Draw!");
         disableAllButtons();
         restartGame();
     }
-private boolean isBoardFull(){ // kollar om brädan är full
-        for (int i = 0; i < 3; i++){ // kollar igenom alla rader
-            for (int j = 0; j < 3; j++){ // kollar igenom alla kollumner
-                if (buttons[i][j].getText().equals(""))
 
-                {
+    private boolean isBoardFull() { // kollar om brädan är full
+        for (int i = 0; i < 3; i++) { // kollar igenom alla rader
+            for (int j = 0; j < 3; j++) { // kollar igenom alla kollumner
+                if (buttons[i][j].getText().equals("")) {
                     return false;
                 }
             }
         }
         return true;
-}
+    }
+
     private void restartGame() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
