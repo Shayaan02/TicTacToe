@@ -37,7 +37,6 @@ public class TicTacToe implements ActionListener {
         frame.add(textfield, BorderLayout.SOUTH);
         frame.add(turnOnAI, BorderLayout.NORTH);
         frame.add(panel, BorderLayout.CENTER);
-
         frame.setSize(700, 700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,78 +46,83 @@ public class TicTacToe implements ActionListener {
     }
 
     public void checkForWinner() {
-        // Kollar X och O win conditions
+        // Check X win conditions
         if (buttons[0][0].getText().equals(" X ") && buttons[0][1].getText().equals(" X ") && buttons[0][2].getText().equals(" X ")) {
-            xWins(0, 1, 2);
+            xWins(0, 0, 0, 1, 0, 2);
         }
         if (buttons[1][0].getText().equals(" X ") && buttons[1][1].getText().equals(" X ") && buttons[1][2].getText().equals(" X ")) {
-            xWins(3, 4, 5);
+            xWins(1, 0, 1, 1, 1, 2);
         }
         if (buttons[2][0].getText().equals(" X ") && buttons[2][1].getText().equals(" X ") && buttons[2][2].getText().equals(" X ")) {
-            xWins(6, 7, 8);
+            xWins(2, 0, 2, 1, 2, 2);
         }
         if (buttons[0][0].getText().equals(" X ") && buttons[1][0].getText().equals(" X ") && buttons[2][0].getText().equals(" X ")) {
-            xWins(0, 3, 6);
+            xWins(0, 0, 1, 0, 2, 0);
         }
         if (buttons[0][1].getText().equals(" X ") && buttons[1][1].getText().equals(" X ") && buttons[2][1].getText().equals(" X ")) {
-            xWins(1, 4, 7);
+            xWins(0, 1, 1, 1, 2, 1);
         }
         if (buttons[0][2].getText().equals(" X ") && buttons[1][2].getText().equals(" X ") && buttons[2][2].getText().equals(" X ")) {
-            xWins(2, 5, 8);
+            xWins(0, 2, 1, 2, 2, 2);
         }
         if (buttons[0][0].getText().equals(" X ") && buttons[1][1].getText().equals(" X ") && buttons[2][2].getText().equals(" X ")) {
-            xWins(0, 4, 8);
+            xWins(0, 0, 1, 1, 2, 2);
         }
         if (buttons[0][2].getText().equals(" X ") && buttons[1][1].getText().equals(" X ") && buttons[2][0].getText().equals(" X ")) {
-            xWins(2, 4, 6);
+            xWins(0, 2, 1, 1, 2, 0);
         }
+
         // Check O win conditions
         if (buttons[0][0].getText().equals(" O ") && buttons[0][1].getText().equals(" O ") && buttons[0][2].getText().equals(" O ")) {
-            oWins(0, 1, 2);
+            oWins(0, 0, 0, 1, 0, 2);
         }
         if (buttons[1][0].getText().equals(" O ") && buttons[1][1].getText().equals(" O ") && buttons[1][2].getText().equals(" O ")) {
-            oWins(3, 4, 5);
+            oWins(1, 0, 1, 1, 1, 2);
         }
         if (buttons[2][0].getText().equals(" O ") && buttons[2][1].getText().equals(" O ") && buttons[2][2].getText().equals(" O ")) {
-            oWins(6, 7, 8);
+            oWins(2, 0, 2, 1, 2, 2);
         }
         if (buttons[0][0].getText().equals(" O ") && buttons[1][0].getText().equals(" O ") && buttons[2][0].getText().equals(" O ")) {
-            oWins(0, 3, 6);
+            oWins(0, 0, 1, 0, 2, 0);
         }
         if (buttons[0][1].getText().equals(" O ") && buttons[1][1].getText().equals(" O ") && buttons[2][1].getText().equals(" O ")) {
-            oWins(1, 4, 7);
+            oWins(0, 1, 1, 1, 2, 1);
         }
         if (buttons[0][2].getText().equals(" O ") && buttons[1][2].getText().equals(" O ") && buttons[2][2].getText().equals(" O ")) {
-            oWins(2, 5, 8);
+            oWins(0, 2, 1, 2, 2, 2);
         }
         if (buttons[0][0].getText().equals(" O ") && buttons[1][1].getText().equals(" O ") && buttons[2][2].getText().equals(" O ")) {
-            oWins(0, 4, 8);
+            oWins(0, 0, 1, 1, 2, 2);
         }
         if (buttons[0][2].getText().equals(" O ") && buttons[1][1].getText().equals(" O ") && buttons[2][0].getText().equals(" O ")) {
-            oWins(2, 4, 6);
+            oWins(0, 2, 1, 1, 2, 0);
         }
-        // kollar om om det är lika efter att ha kollat igenom alla win conditions
+
+        // Check for a draw
         if (isBoardFull() && !isXTurn) {
             draw();
         }
     }
 
-    public void xWins(int a, int b, int c) {
+
+    public void xWins(int x1, int y1, int x2, int y2, int x3, int y3) {
+        buttons[x1][y1].setBackground(Color.GREEN);
+        buttons[x2][y2].setBackground(Color.GREEN);
+        buttons[x3][y3].setBackground(Color.GREEN);
         JOptionPane.showMessageDialog(frame, "X Wins");
         disableAllButtons();
-        textfield.setText("X Wins");
         restartGame();
     }
 
-    public void oWins(int a, int b, int c) {
-       /* buttons[a][0].setBackground(Color.GREEN);
-        buttons[b][1].setBackground(Color.GREEN);
-        buttons[c][2].setBackground(Color.GREEN);*/
+    public void oWins(int x1, int y1, int x2, int y2, int x3, int y3) {
+        buttons[x1][y1].setBackground(Color.GREEN);
+        buttons[x2][y2].setBackground(Color.GREEN);
+        buttons[x3][y3].setBackground(Color.GREEN);
         JOptionPane.showMessageDialog(frame, "O Wins!");
         disableAllButtons();
-        textfield.setText("O Wins");
         restartGame();
     }
+
 
     private void toggleAI() {
         AIEnabled = !AIEnabled;
